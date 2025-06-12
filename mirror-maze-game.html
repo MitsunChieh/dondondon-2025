@@ -93,6 +93,48 @@
             color: #7f8c8d;
         }
 
+        .mirror-display {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mirror-forward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, transparent calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), transparent calc(50% + 1px));
+        }
+
+        .mirror-backward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), transparent calc(50% + 1px));
+        }
+
+        .game-mirror-forward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
+
+        .game-mirror-backward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
+
         .door {
             position: absolute;
             width: 30px;
@@ -312,6 +354,173 @@
                 margin: 0;
             }
         }
+
+        /* 開發者模式樣式 */
+        .dev-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dev-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #444;
+        }
+
+        .dev-panel-title {
+            color: #4CAF50;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .dev-panel-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .dev-panel-btn {
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .dev-panel-btn:hover {
+            background: #444;
+        }
+
+        .dev-section {
+            margin: 10px 0;
+        }
+
+        .dev-section h4 {
+            margin: 5px 0;
+            color: #4CAF50;
+            font-size: 12px;
+        }
+
+        .dev-mirror-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: #333;
+            padding: 2px;
+            margin: 5px 0;
+        }
+
+        .dev-room {
+            background: #444;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+            min-width: 40px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dev-room .room-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 8px;
+            color: #888;
+        }
+
+        .dev-mirror-type {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dev-mirror-forward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, transparent calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), transparent calc(50% + 1px));
+        }
+
+        .dev-mirror-backward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), transparent calc(50% + 1px));
+        }
+
+        .dev-stats {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* 遊戲主界面鏡子樣式 */
+        .mirror-display {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-mirror-forward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
+
+        .game-mirror-backward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
+
+        /* 猜測界面鏡子樣式 */
+        .guess-mirror {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .guess-mirror-forward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
+
+        .guess-mirror-backward {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent calc(50% - 2px), #2c3e50 calc(50% - 2px), #2c3e50 calc(50% + 2px), transparent calc(50% + 2px));
+        }
     </style>
 </head>
 <body>
@@ -450,6 +659,9 @@
                 this.selectedDoor = null;
                 this.roundHistory = [];
                 this.roundCount = 0;
+                this.isDevMode = false;
+                this.devModeClickCount = 0;
+                this.devModeClickTimeout = null;
                 
                 // 門與房間的對應關係
                 this.doorToRoom = {
@@ -482,6 +694,7 @@
                 
                 this.initializeGame();
                 this.setupEventListeners();
+                this.setupDevMode();
             }
             
             initializeGame() {
@@ -510,6 +723,9 @@
                 // 更新顯示
                 this.updateGuessDisplay();
                 this.updateHistoryDisplay();
+                if (this.isDevMode) {
+                    this.updateDevModeDisplay();
+                }
                 this.showMessage('遊戲開始！點擊外門進行探索', 'info');
             }
             
@@ -576,6 +792,9 @@
                 
                 // 更新顯示
                 this.updateHistoryDisplay();
+                if (this.isDevMode) {
+                    this.updateDevModeDisplay();
+                }
                 
                 // 重置選擇
                 document.querySelectorAll('.door').forEach(d => {
@@ -706,11 +925,11 @@
                     const mirror = this.playerGuess[index];
                     
                     if (mirror === 'forward') {
-                        mirrorSpan.textContent = '/';
+                        mirrorSpan.innerHTML = '<div class="guess-mirror-forward"></div>';
                     } else if (mirror === 'backward') {
-                        mirrorSpan.textContent = '\\';
+                        mirrorSpan.innerHTML = '<div class="guess-mirror-backward"></div>';
                     } else {
-                        mirrorSpan.textContent = '';
+                        mirrorSpan.innerHTML = '';
                     }
                 });
             }
@@ -734,6 +953,10 @@
                 // 重置到初始配置
                 this.currentMirrors = [...this.initialMirrors];
                 this.showMessage('鏡子已重置到初始配置', 'info');
+                // 更新開發者模式顯示
+                if (this.isDevMode) {
+                    this.updateDevModeDisplay();
+                }
             }
             
             submitGuess() {
@@ -762,11 +985,11 @@
                     const mirror = this.initialMirrors[index];
                     
                     if (mirror === 'forward') {
-                        mirrorDisplay.textContent = '/';
+                        mirrorDisplay.innerHTML = '<div class="game-mirror-forward"></div>';
                     } else if (mirror === 'backward') {
-                        mirrorDisplay.textContent = '\\';
+                        mirrorDisplay.innerHTML = '<div class="game-mirror-backward"></div>';
                     } else {
-                        mirrorDisplay.textContent = '';
+                        mirrorDisplay.innerHTML = '';
                     }
                 });
             }
@@ -789,6 +1012,99 @@
                         }
                     }, 300);
                 }, 3000);
+            }
+
+            setupDevMode() {
+                // 設置標題點擊事件
+                const title = document.querySelector('h1');
+                title.addEventListener('click', () => {
+                    this.handleDevModeClick();
+                });
+
+                // 設置開發環境快捷鍵
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                        this.toggleDevMode();
+                    }
+                });
+            }
+
+            handleDevModeClick() {
+                this.devModeClickCount++;
+                
+                // 立即檢查是否達到開啟條件
+                if (this.devModeClickCount >= 5) {
+                    this.toggleDevMode();
+                    this.devModeClickCount = 0;
+                    return;
+                }
+                
+                // 清除之前的計時器
+                if (this.devModeClickTimeout) {
+                    clearTimeout(this.devModeClickTimeout);
+                }
+                
+                // 設置新的計時器，僅用於重置計數
+                this.devModeClickTimeout = setTimeout(() => {
+                    this.devModeClickCount = 0;
+                }, 2000); // 保持原有的 2 秒寬容時間
+            }
+
+            toggleDevMode() {
+                this.isDevMode = !this.isDevMode;
+                this.updateDevModeDisplay();
+            }
+
+            updateDevModeDisplay() {
+                let devPanel = document.getElementById('devPanel');
+                if (!devPanel) {
+                    devPanel = document.createElement('div');
+                    devPanel.id = 'devPanel';
+                    document.body.appendChild(devPanel);
+                }
+
+                if (this.isDevMode) {
+                    devPanel.innerHTML = `
+                        <div class="dev-panel">
+                            <div class="dev-panel-header">
+                                <span class="dev-panel-title">開發者模式</span>
+                                <div class="dev-panel-controls">
+                                    <button class="dev-panel-btn" onclick="game.toggleDevMode()">關閉</button>
+                                </div>
+                            </div>
+                            <div class="dev-section">
+                                <h4>初始狀態</h4>
+                                <div class="dev-mirror-grid initial-state">
+                                    ${this.renderMirrorGrid(this.initialMirrors)}
+                                </div>
+                            </div>
+                            <div class="dev-section">
+                                <h4>當前狀態</h4>
+                                <div class="dev-mirror-grid current-state">
+                                    ${this.renderMirrorGrid(this.currentMirrors)}
+                                </div>
+                            </div>
+                            <div class="dev-stats">
+                                回合數: ${this.roundCount}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    devPanel.innerHTML = '';
+                }
+            }
+
+            renderMirrorGrid(mirrors) {
+                return mirrors.map((mirror, index) => `
+                    <div class="dev-room" data-room="${index}">
+                        <span class="room-number">${index + 1}</span>
+                        <span class="dev-mirror-type">
+                            ${mirror === 'forward' ? '<div class="dev-mirror-forward"></div>' : 
+                              mirror === 'backward' ? '<div class="dev-mirror-backward"></div>' : 
+                              ''}
+                        </span>
+                    </div>
+                `).join('');
             }
         }
         
