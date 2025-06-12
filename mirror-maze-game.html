@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鏡子迷宮推理遊戲</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .maze-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .maze-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 20px;
+        }
+
+        .maze-grid {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 300px;
+            height: 300px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            background: #34495e;
+            padding: 2px;
+        }
+
+        .room {
+            background: #ecf0f1;
+            border: 2px solid #34495e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            position: relative;
+            cursor: default;
+        }
+
+        .room-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .door {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #3498db;
+            border: 2px solid #2980b9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .door:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .door.selected {
+            background: #e74c3c;
+            border-color: #c0392b;
+            transform: scale(1.2);
+        }
+
+        /* 門的位置 */
+        .door-1 { bottom: -15px; left: 65px; }
+        .door-2 { bottom: -15px; left: 165px; }
+        .door-3 { bottom: -15px; left: 265px; }
+        .door-4 { right: -15px; bottom: 65px; }
+        .door-5 { right: -15px; bottom: 165px; }
+        .door-6 { right: -15px; bottom: 265px; }
+        .door-7 { top: -15px; right: 65px; }
+        .door-8 { top: -15px; right: 165px; }
+        .door-9 { top: -15px; right: 265px; }
+        .door-10 { left: -15px; top: 65px; }
+        .door-11 { left: -15px; top: 165px; }
+        .door-12 { left: -15px; top: 265px; }
+
+        .guess-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+        }
+
+        .guess-cell {
+            background: #ecf0f1;
+            border: 2px solid #34495e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .guess-cell:hover {
+            background: #bdc3c7;
+        }
+
+        .guess-cell .room-number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .history {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .history h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .history-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .info-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #34495e;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .maze-container {
+                transform: scale(0.8);
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>鏡子迷宮推理遊戲</h1>
+        
+        <div class="main-content">
+            <div class="maze-section">
+                <h2>探索迷宮</h2>
+                <div class="section-title">點擊外門開始探索</div>
+                <div class="maze-container">
+                    <div class="maze-grid">
+                        <div class="room" data-room="0">
+                            <span class="room-number">1</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="1">
+                            <span class="room-number">2</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="2">
+                            <span class="room-number">3</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="3">
+                            <span class="room-number">4</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="4">
+                            <span class="room-number">5</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="5">
+                            <span class="room-number">6</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="6">
+                            <span class="room-number">7</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="7">
+                            <span class="room-number">8</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                        <div class="room" data-room="8">
+                            <span class="room-number">9</span>
+                            <span class="mirror-display"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- 外門 -->
+                    <div class="door door-1" data-door="1">1</div>
+                    <div class="door door-2" data-door="2">2</div>
+                    <div class="door door-3" data-door="3">3</div>
+                    <div class="door door-4" data-door="4">4</div>
+                    <div class="door door-5" data-door="5">5</div>
+                    <div class="door door-6" data-door="6">6</div>
+                    <div class="door door-7" data-door="7">7</div>
+                    <div class="door door-8" data-door="8">8</div>
+                    <div class="door door-9" data-door="9">9</div>
+                    <div class="door door-10" data-door="10">10</div>
+                    <div class="door door-11" data-door="11">11</div>
+                    <div class="door door-12" data-door="12">12</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn-primary" id="startExplore" disabled>開始探索</button>
+                    <button class="btn-warning" id="resetMirrors">重置鏡子配置</button>
+                    <button class="btn-danger" id="newGame">重新開始遊戲</button>
+                </div>
+            </div>
+            
+            <div class="guess-section">
+                <h2>猜測鏡子配置</h2>
+                <div class="section-title">點擊格子設置鏡子</div>
+                <div class="guess-grid">
+                    <div class="guess-cell" data-room="0">
+                        <span class="room-number">1</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="1">
+                        <span class="room-number">2</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="2">
+                        <span class="room-number">3</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="3">
+                        <span class="room-number">4</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="4">
+                        <span class="room-number">5</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="5">
+                        <span class="room-number">6</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="6">
+                        <span class="room-number">7</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="7">
+                        <span class="room-number">8</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                    <div class="guess-cell" data-room="8">
+                        <span class="room-number">9</span>
+                        <span class="guess-mirror"></span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn-success" id="submitGuess">提交猜測</button>
+                </div>
+                
+                <div class="history">
+                    <h3>探索記錄</h3>
+                    <div id="historyContent"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="messageArea"></div>
+    </div>
+
+    <script>
+        class MirrorMaze {
+            constructor() {
+                // 初始化遊戲狀態
+                this.initialMirrors = [];
+                this.currentMirrors = [];
+                this.playerGuess = new Array(9).fill(null);
+                this.selectedDoor = null;
+                this.roundHistory = [];
+                this.roundCount = 0;
+                
+                // 門與房間的對應關係
+                this.doorToRoom = {
+                    1: {room: 6, direction: 'down'},   // 房間7下門
+                    2: {room: 7, direction: 'down'},   // 房間8下門
+                    3: {room: 8, direction: 'down'},   // 房間9下門
+                    4: {room: 8, direction: 'right'},  // 房間9右門
+                    5: {room: 5, direction: 'right'},  // 房間6右門
+                    6: {room: 2, direction: 'right'},  // 房間3右門
+                    7: {room: 2, direction: 'up'},     // 房間3上門
+                    8: {room: 1, direction: 'up'},     // 房間2上門
+                    9: {room: 0, direction: 'up'},     // 房間1上門
+                    10: {room: 0, direction: 'left'},  // 房間1左門
+                    11: {room: 3, direction: 'left'},  // 房間4左門
+                    12: {room: 6, direction: 'left'}   // 房間7左門
+                };
+                
+                // 房間連接關係
+                this.roomConnections = {
+                    0: {up: null, right: 1, down: 3, left: null},
+                    1: {up: null, right: 2, down: 4, left: 0},
+                    2: {up: null, right: null, down: 5, left: 1},
+                    3: {up: 0, right: 4, down: 6, left: null},
+                    4: {up: 1, right: 5, down: 7, left: 3},
+                    5: {up: 2, right: null, down: 8, left: 4},
+                    6: {up: 3, right: 7, down: null, left: null},
+                    7: {up: 4, right: 8, down: null, left: 6},
+                    8: {up: 5, right: null, down: null, left: 7}
+                };
+                
+                this.initializeGame();
+                this.setupEventListeners();
+            }
+            
+            initializeGame() {
+                // 隨機生成初始鏡子配置
+                this.initialMirrors = [];
+                for (let i = 0; i < 9; i++) {
+                    const rand = Math.random();
+                    if (rand < 0.33) {
+                        this.initialMirrors.push(null);
+                    } else if (rand < 0.66) {
+                        this.initialMirrors.push('forward');  // /
+                    } else {
+                        this.initialMirrors.push('backward'); // \
+                    }
+                }
+                
+                // 複製到當前配置
+                this.currentMirrors = [...this.initialMirrors];
+                
+                // 重置其他狀態
+                this.playerGuess = new Array(9).fill(null);
+                this.selectedDoor = null;
+                this.roundHistory = [];
+                this.roundCount = 0;
+                
+                // 更新顯示
+                this.updateGuessDisplay();
+                this.updateHistoryDisplay();
+                this.showMessage('遊戲開始！點擊外門進行探索', 'info');
+            }
+            
+            setupEventListeners() {
+                // 外門點擊事件
+                document.querySelectorAll('.door').forEach(door => {
+                    door.addEventListener('click', (e) => {
+                        this.selectDoor(parseInt(e.target.dataset.door));
+                    });
+                });
+                
+                // 猜測格子點擊事件
+                document.querySelectorAll('.guess-cell').forEach(cell => {
+                    cell.addEventListener('click', (e) => {
+                        const room = parseInt(e.currentTarget.dataset.room);
+                        this.toggleGuess(room);
+                    });
+                });
+                
+                // 按鈕事件
+                document.getElementById('startExplore').addEventListener('click', () => {
+                    this.startExploration();
+                });
+                
+                document.getElementById('resetMirrors').addEventListener('click', () => {
+                    this.resetMirrors();
+                });
+                
+                document.getElementById('newGame').addEventListener('click', () => {
+                    this.initializeGame();
+                });
+                
+                document.getElementById('submitGuess').addEventListener('click', () => {
+                    this.submitGuess();
+                });
+            }
+            
+            selectDoor(doorNumber) {
+                // 移除之前的選擇
+                document.querySelectorAll('.door').forEach(d => {
+                    d.classList.remove('selected');
+                });
+                
+                // 選擇新門
+                this.selectedDoor = doorNumber;
+                document.querySelector(`.door-${doorNumber}`).classList.add('selected');
+                document.getElementById('startExplore').disabled = false;
+            }
+            
+            startExploration() {
+                if (!this.selectedDoor) return;
+                
+                // 執行探索
+                const result = this.simulateMovement(this.selectedDoor);
+                
+                // 記錄結果
+                this.roundCount++;
+                this.roundHistory.push({
+                    round: this.roundCount,
+                    entryDoor: this.selectedDoor,
+                    exitDoor: result.exitDoor,
+                    rotations: result.rotations
+                });
+                
+                // 更新顯示
+                this.updateHistoryDisplay();
+                
+                // 重置選擇
+                document.querySelectorAll('.door').forEach(d => {
+                    d.classList.remove('selected');
+                });
+                this.selectedDoor = null;
+                document.getElementById('startExplore').disabled = true;
+            }
+            
+            simulateMovement(entryDoor) {
+                const entry = this.doorToRoom[entryDoor];
+                let currentRoom = entry.room;
+                let currentDirection = entry.direction;
+                let rotations = 0;
+                let path = [];
+                
+                // 安全計數器防止無限循環
+                let steps = 0;
+                const maxSteps = 20;
+                
+                while (steps < maxSteps) {
+                    steps++;
+                    path.push({room: currentRoom, direction: currentDirection});
+                    
+                    // 獲取當前房間的鏡子
+                    const mirror = this.currentMirrors[currentRoom];
+                    
+                    let nextDirection;
+                    
+                    if (mirror === null) {
+                        // 無鏡房間：直線穿過
+                        const oppositeDirection = {
+                            'up': 'down',
+                            'down': 'up',
+                            'left': 'right',
+                            'right': 'left'
+                        };
+                        nextDirection = oppositeDirection[currentDirection];
+                    } else {
+                        // 有鏡房間：計算反射
+                        rotations++;
+                        nextDirection = this.calculateReflection(currentDirection, mirror);
+                        
+                        // 旋轉鏡子
+                        this.currentMirrors[currentRoom] = (mirror === 'forward') ? 'backward' : 'forward';
+                    }
+                    
+                    // 獲取下一個房間
+                    const nextRoom = this.roomConnections[currentRoom][nextDirection];
+                    
+                    // 如果沒有下一個房間，表示到達外門
+                    if (nextRoom === null) {
+                        // 找到對應的外門編號
+                        const exitDoor = this.findExitDoor(currentRoom, nextDirection);
+                        return {
+                            exitDoor: exitDoor,
+                            rotations: rotations,
+                            path: path
+                        };
+                    }
+                    
+                    // 繼續移動
+                    currentRoom = nextRoom;
+                    // 進入下一個房間的方向是從相反方向
+                    const oppositeDirection = {
+                        'up': 'down',
+                        'down': 'up',
+                        'left': 'right',
+                        'right': 'left'
+                    };
+                    currentDirection = oppositeDirection[nextDirection];
+                }
+                
+                // 不應該到達這裡
+                console.error('Movement simulation exceeded max steps');
+                return {exitDoor: -1, rotations: 0, path: []};
+            }
+            
+            calculateReflection(inDirection, mirrorType) {
+                // 正斜鏡 (/)
+                if (mirrorType === 'forward') {
+                    const reflectionMap = {
+                        'right': 'up',
+                        'up': 'right',
+                        'left': 'down',
+                        'down': 'left'
+                    };
+                    return reflectionMap[inDirection];
+                }
+                // 反斜鏡 (\)
+                else {
+                    const reflectionMap = {
+                        'right': 'down',
+                        'down': 'right',
+                        'left': 'up',
+                        'up': 'left'
+                    };
+                    return reflectionMap[inDirection];
+                }
+            }
+            
+            findExitDoor(room, direction) {
+                // 根據房間和方向找到對應的外門
+                for (const [door, info] of Object.entries(this.doorToRoom)) {
+                    if (info.room === room && info.direction === direction) {
+                        return parseInt(door);
+                    }
+                }
+                return -1;
+            }
+            
+            toggleGuess(room) {
+                // 循環切換：無鏡 -> 正斜鏡(/) -> 反斜鏡(\) -> 無鏡
+                if (this.playerGuess[room] === null) {
+                    this.playerGuess[room] = 'forward';
+                } else if (this.playerGuess[room] === 'forward') {
+                    this.playerGuess[room] = 'backward';
+                } else {
+                    this.playerGuess[room] = null;
+                }
+                
+                this.updateGuessDisplay();
+            }
+            
+            updateGuessDisplay() {
+                document.querySelectorAll('.guess-cell').forEach((cell, index) => {
+                    const mirrorSpan = cell.querySelector('.guess-mirror');
+                    const mirror = this.playerGuess[index];
+                    
+                    if (mirror === 'forward') {
+                        mirrorSpan.textContent = '/';
+                    } else if (mirror === 'backward') {
+                        mirrorSpan.textContent = '\\';
+                    } else {
+                        mirrorSpan.textContent = '';
+                    }
+                });
+            }
+            
+            updateHistoryDisplay() {
+                const historyContent = document.getElementById('historyContent');
+                historyContent.innerHTML = '';
+                
+                this.roundHistory.forEach(record => {
+                    const item = document.createElement('div');
+                    item.className = 'history-item';
+                    item.textContent = `第${record.round}回合：門${record.entryDoor}進入 → ${record.rotations}次咚聲 → 門${record.exitDoor}離開`;
+                    historyContent.appendChild(item);
+                });
+                
+                // 滾動到底部
+                historyContent.scrollTop = historyContent.scrollHeight;
+            }
+            
+            resetMirrors() {
+                // 重置到初始配置
+                this.currentMirrors = [...this.initialMirrors];
+                this.showMessage('鏡子已重置到初始配置', 'info');
+            }
+            
+            submitGuess() {
+                // 檢查是否猜對
+                let correct = true;
+                for (let i = 0; i < 9; i++) {
+                    if (this.playerGuess[i] !== this.initialMirrors[i]) {
+                        correct = false;
+                        break;
+                    }
+                }
+                
+                if (correct) {
+                    this.showMessage('恭喜你！成功推理出所有鏡子的初始配置！', 'success');
+                    // 顯示正確配置
+                    this.revealMirrors();
+                } else {
+                    this.showMessage('猜測錯誤，請繼續探索並推理', 'error');
+                }
+            }
+            
+            revealMirrors() {
+                // 在主迷宮顯示鏡子
+                document.querySelectorAll('.room').forEach((room, index) => {
+                    const mirrorDisplay = room.querySelector('.mirror-display');
+                    const mirror = this.initialMirrors[index];
+                    
+                    if (mirror === 'forward') {
+                        mirrorDisplay.textContent = '/';
+                    } else if (mirror === 'backward') {
+                        mirrorDisplay.textContent = '\\';
+                    } else {
+                        mirrorDisplay.textContent = '';
+                    }
+                });
+            }
+            
+            showMessage(text, type) {
+                const messageArea = document.getElementById('messageArea');
+                messageArea.innerHTML = '';
+                
+                const message = document.createElement('div');
+                message.className = `message ${type}-message`;
+                message.textContent = text;
+                messageArea.appendChild(message);
+                
+                // 3秒後自動消失
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    setTimeout(() => {
+                        if (message.parentNode) {
+                            message.parentNode.removeChild(message);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+        }
+        
+        // 初始化遊戲
+        const game = new MirrorMaze();
+    </script>
+</body>
+</html>
