@@ -658,20 +658,20 @@
                 // 正斜鏡 (/)
                 if (mirrorType === 'forward') {
                     const reflectionMap = {
-                        'right': 'up',
-                        'up': 'right',
-                        'left': 'down',
-                        'down': 'left'
+                        'right': 'down',  // 右進 → 下出
+                        'down': 'right',  // 下進 → 右出
+                        'left': 'up',     // 左進 → 上出
+                        'up': 'left'      // 上進 → 左出
                     };
                     return reflectionMap[inDirection];
                 }
                 // 反斜鏡 (\)
                 else {
                     const reflectionMap = {
-                        'right': 'down',
-                        'down': 'right',
-                        'left': 'up',
-                        'up': 'left'
+                        'right': 'up',    // 右進 → 上出
+                        'up': 'right',    // 上進 → 右出
+                        'left': 'down',   // 左進 → 下出
+                        'down': 'left'    // 下進 → 左出
                     };
                     return reflectionMap[inDirection];
                 }
