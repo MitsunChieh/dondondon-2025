@@ -40,6 +40,21 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .game-rules {
+            margin-bottom: 30px;
+        }
+
+        .game-rules h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .game-rules ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -640,11 +655,66 @@
             gap: 10px;
             margin-top: 20px;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="game-container">
         <h1>鏡子迷宮推理遊戲</h1>
+        
+        <button class="btn-primary" id="showRules">顯示遊戲規則</button>
+        
+        <div id="rulesModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>遊玩規則</h2>
+                <ul>
+                    <li>外門：迷宮外圍的 12 個門，點擊任意外門開始探索。</li>
+                    <li>咚聲：當光線碰到鏡子時，會發出咚聲，咚聲數代表光線在迷宮中碰到鏡子的次數。</li>
+                    <li>鏡子邏輯：光線進入房間後，若房間有鏡子，光線會反射並改變方向，同時發出咚聲。</li>
+                    <li>鏡子旋轉：每次光線碰到鏡子後，完成反射後，鏡子會旋轉 90 度，改變其設置方向：從正斜鏡轉成反斜鏡，反之亦然。</li>
+                    <li>光線反射：正斜鏡(/)與反斜鏡(\)會根據光線入射方向，反射光線到不同方向。</li>
+                    <li>根據探索結果，推理出每個房間的鏡子配置。</li>
+                    <li>鏡子有三種狀態：無鏡、正斜鏡(/)與反斜鏡(\)。</li>
+                    <li>猜測正確後，遊戲結束。</li>
+                </ul>
+            </div>
+        </div>
         
         <div class="main-content">
             <div class="maze-section">
@@ -1342,6 +1412,28 @@
         
         // 初始化遊戲
         const game = new MirrorMaze();
+
+        // 顯示遊戲規則的 Modal
+        const modal = document.getElementById('rulesModal');
+        const btn = document.getElementById('showRules');
+        const span = document.getElementsByClassName('close')[0];
+
+        // 預設開啟 Modal
+        modal.style.display = 'block';
+
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
