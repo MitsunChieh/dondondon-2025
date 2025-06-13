@@ -1171,6 +1171,15 @@
                 title.addEventListener('click', () => {
                     this.handleDevModeClick();
                 });
+                
+                // 設置清空猜測按鈕點擊事件
+                const clearGuessBtn = document.querySelector('.clear-button');
+                console.log('Clear guess button:', clearGuessBtn); // 檢查是否找到按鈕
+                if (clearGuessBtn) {
+                    clearGuessBtn.addEventListener('click', () => {
+                        this.handleDevModeClick();
+                    });
+                }
 
                 // 設置開發環境快捷鍵
                 document.addEventListener('keydown', (e) => {
