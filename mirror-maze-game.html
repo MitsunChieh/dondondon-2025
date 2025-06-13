@@ -817,6 +817,8 @@
                 // 記錄結果
                 this.roundCount++;
                 this.roundHistory.push({
+                    type: 'path',
+                    timestamp: new Date(),
                     round: this.roundCount,
                     entryDoor: this.selectedDoor,
                     exitDoor: result.exitDoor,
@@ -969,15 +971,41 @@
             
             updateHistoryDisplay() {
                 const historyContent = document.getElementById('historyContent');
-                historyContent.innerHTML = '';
-                
-                this.roundHistory.forEach(record => {
-                    const item = document.createElement('div');
-                    item.className = 'history-item';
-                    item.textContent = `第${record.round}回合：門${record.entryDoor}進入 → ${record.rotations}次咚聲 → 門${record.exitDoor}離開`;
-                    historyContent.appendChild(item);
-                });
-                
+                if (!historyContent) return;
+
+                historyContent.innerHTML = this.roundHistory.map(item => {
+                    if (item.type === 'path') {
+                        return `
+                            <div class="history-item path">
+                                <span class="timestamp">${this.formatTime(item.timestamp)}</span>
+                                <span class="description">第${item.round}回合：門${item.entryDoor}進入 → ${item.rotations}次咚聲 → 門${item.exitDoor}離開</span>
+                            </div>
+                        `;
+                    } else if (item.type === 'reset') {
+                        return `
+                            <div class="history-item reset">
+                                <span class="timestamp">${this.formatTime(item.timestamp)}</span>
+                                <span class="description">第${item.round}回合：${item.description}</span>
+                            </div>
+                        `;
+                    } else if (item.type === 'wrong') {
+                        return `
+                            <div class="history-item wrong">
+                                <span class="timestamp">${this.formatTime(item.timestamp)}</span>
+                                <span class="description">${item.description}</span>
+                            </div>
+                        `;
+                    } else if (item.type === 'correct') {
+                        return `
+                            <div class="history-item correct">
+                                <span class="timestamp">${this.formatTime(item.timestamp)}</span>
+                                <span class="description">${item.description}</span>
+                            </div>
+                        `;
+                    }
+                    return '';
+                }).join('');
+
                 // 滾動到底部
                 historyContent.scrollTop = historyContent.scrollHeight;
             }
@@ -990,6 +1018,18 @@
                 if (this.isDevMode) {
                     this.updateDevModeDisplay();
                 }
+
+                // 增加回合數
+                this.roundCount++;
+                
+                // 加入重置鏡子的歷史記錄
+                this.roundHistory.push({
+                    type: 'reset',
+                    timestamp: new Date(),
+                    round: this.roundCount,
+                    description: '重置鏡子到初始狀態'
+                });
+                this.updateHistoryDisplay();
             }
             
             submitGuess() {
@@ -1146,6 +1186,14 @@
                 // 更新顯示
                 this.updateGuessDisplay();
                 this.showMessage('已清空所有猜測', 'info');
+            }
+
+            formatTime(timestamp) {
+                const date = new Date(timestamp);
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
+                return `${hours}:${minutes}:${seconds}`;
             }
         }
         
