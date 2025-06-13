@@ -139,46 +139,89 @@
 
         .door {
             position: absolute;
-            width: 30px;
-            height: 30px;
-            background: #3498db;
-            border: 2px solid #2980b9;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
+            color: #3498db;
+            font-size: 24px;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
         }
 
         .door:hover {
-            background: #2980b9;
+            color: #2980b9;
             transform: scale(1.1);
         }
 
         .door.selected {
-            background: #e74c3c;
-            border-color: #c0392b;
+            color: #e74c3c;
             transform: scale(1.2);
         }
 
-        /* 門的位置 */
-        .door-1 { bottom: -15px; left: 65px; }
-        .door-2 { bottom: -15px; left: 165px; }
-        .door-3 { bottom: -15px; left: 265px; }
-        .door-4 { right: -15px; bottom: 65px; }
-        .door-5 { right: -15px; bottom: 165px; }
-        .door-6 { right: -15px; bottom: 265px; }
-        .door-7 { top: -15px; right: 65px; }
-        .door-8 { top: -15px; right: 165px; }
-        .door-9 { top: -15px; right: 265px; }
-        .door-10 { left: -15px; top: 65px; }
-        .door-11 { left: -15px; top: 165px; }
-        .door-12 { left: -15px; top: 265px; }
+        .door-number {
+            position: absolute;
+            font-size: 12px;
+            font-weight: bold;
+            color: #2c3e50;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2px 6px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 門的位置和箭頭方向 */
+        .door-1 { bottom: -20px; left: 65px; }
+        .door-1 i { transform: rotate(0deg); }
+        .door-1 .door-number { bottom: -15px; }
+
+        .door-2 { bottom: -20px; left: 165px; }
+        .door-2 i { transform: rotate(0deg); }
+        .door-2 .door-number { bottom: -15px; }
+
+        .door-3 { bottom: -20px; left: 265px; }
+        .door-3 i { transform: rotate(0deg); }
+        .door-3 .door-number { bottom: -15px; }
+
+        .door-4 { right: -20px; bottom: 65px; }
+        .door-4 i { transform: rotate(90deg); }
+        .door-4 .door-number { right: -15px; }
+
+        .door-5 { right: -20px; bottom: 165px; }
+        .door-5 i { transform: rotate(90deg); }
+        .door-5 .door-number { right: -15px; }
+
+        .door-6 { right: -20px; bottom: 265px; }
+        .door-6 i { transform: rotate(90deg); }
+        .door-6 .door-number { right: -15px; }
+
+        .door-7 { top: -20px; right: 65px; }
+        .door-7 i { transform: rotate(180deg); }
+        .door-7 .door-number { top: -15px; }
+
+        .door-8 { top: -20px; right: 165px; }
+        .door-8 i { transform: rotate(180deg); }
+        .door-8 .door-number { top: -15px; }
+
+        .door-9 { top: -20px; right: 265px; }
+        .door-9 i { transform: rotate(180deg); }
+        .door-9 .door-number { top: -15px; }
+
+        .door-10 { left: -20px; top: 65px; }
+        .door-10 i { transform: rotate(270deg); }
+        .door-10 .door-number { left: -15px; }
+
+        .door-11 { left: -20px; top: 165px; }
+        .door-11 i { transform: rotate(270deg); }
+        .door-11 .door-number { left: -15px; }
+
+        .door-12 { left: -20px; top: 265px; }
+        .door-12 i { transform: rotate(270deg); }
+        .door-12 .door-number { left: -15px; }
 
         .guess-grid {
             display: grid;
