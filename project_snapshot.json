@@ -1,0 +1,388 @@
+{
+  "files": {
+    "/Users/chennaiyuan/Documents/Cursor Projects/dondondon-2025/index.html": {
+      "type": "html",
+      "size": 45548
+    }
+  },
+  "functions": [],
+  "classes": [
+    {
+      "name": "MirrorMaze",
+      "methods": [
+        {
+          "name": "initializeGame",
+          "params": "",
+          "docstring": "初始化遊戲，隨機生成初始鏡子配置，並重置遊戲狀態。"
+        },
+        {
+          "name": "for",
+          "params": "let i = 0; i < 9; i++",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "rand < 0.33",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "rand < 0.66",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.isDevMode",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "setupEventListeners",
+          "params": "",
+          "docstring": "設置所有事件監聽器，包括外門點擊、猜測格子點擊等。"
+        },
+        {
+          "name": "selectDoor",
+          "params": "doorNumber",
+          "docstring": "選擇一個外門作為光線入口。"
+        },
+        {
+          "name": "startExploration",
+          "params": "",
+          "docstring": "開始探索，模擬光線從選定外門進入後的路徑。"
+        },
+        {
+          "name": "if",
+          "params": "this.isDevMode",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "simulateMovement",
+          "params": "entryDoor",
+          "docstring": "模擬光線從指定外門進入後的路徑，計算反射次數與出口。"
+        },
+        {
+          "name": "while",
+          "params": "steps < maxSteps",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "mirror === null",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "nextRoom === null",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "calculateReflection",
+          "params": "inDirection, mirrorType",
+          "docstring": "計算光線在鏡子上的反射方向。"
+        },
+        {
+          "name": "if",
+          "params": "mirrorType === 'forward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "findExitDoor",
+          "params": "room, direction",
+          "docstring": "根據房間與方向找到對應的外門。"
+        },
+        {
+          "name": "if",
+          "params": "info.room === room && info.direction === direction",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "toggleGuess",
+          "params": "room",
+          "docstring": "切換指定房間的鏡子猜測狀態（無鏡、正斜鏡、反斜鏡）。"
+        },
+        {
+          "name": "if",
+          "params": "this.playerGuess[room] === null",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.playerGuess[room] === 'forward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "updateGuessDisplay",
+          "params": "",
+          "docstring": "更新猜測區域的顯示。"
+        },
+        {
+          "name": "if",
+          "params": "mirror === 'forward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "mirror === 'backward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "updateHistoryDisplay",
+          "params": "",
+          "docstring": "更新探索歷史記錄的顯示。"
+        },
+        {
+          "name": "map",
+          "params": "item => {\n                    if (item.type === 'path'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "item.type === 'reset'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "item.type === 'wrong'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "item.type === 'correct'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "resetMirrors",
+          "params": "",
+          "docstring": "重置鏡子配置到初始狀態。"
+        },
+        {
+          "name": "if",
+          "params": "this.isDevMode",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "submitGuess",
+          "params": "",
+          "docstring": "提交猜測，檢查是否猜對所有鏡子配置。"
+        },
+        {
+          "name": "for",
+          "params": "let i = 0; i < 9; i++",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.playerGuess[i] !== this.initialMirrors[i]",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "correct",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "revealMirrors",
+          "params": "",
+          "docstring": "在主迷宮顯示正確的鏡子配置。"
+        },
+        {
+          "name": "if",
+          "params": "mirror === 'forward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "mirror === 'backward'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "showMessage",
+          "params": "text, type",
+          "docstring": "顯示訊息，並在指定時間後自動消失。"
+        },
+        {
+          "name": "if",
+          "params": "message.parentNode",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "setupDevMode",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "clearGuessBtn",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "e.ctrlKey && e.shiftKey && e.key === 'D'",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "handleDevModeClick",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.devModeClickCount >= 5",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.devModeClickTimeout",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "toggleDevMode",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "updateDevModeDisplay",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "!devPanel",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.isDevMode",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "renderMirrorGrid",
+          "params": "mirrors",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "clearGuesses",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "formatTime",
+          "params": "timestamp",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "toggleHistorySort",
+          "params": "",
+          "docstring": "未知功能。"
+        },
+        {
+          "name": "if",
+          "params": "this.isHistoryReversed",
+          "docstring": "未知功能。"
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "name": "i",
+      "value": "0"
+    },
+    {
+      "name": "rand",
+      "value": "Math.random()"
+    },
+    {
+      "name": "room",
+      "value": "parseInt(e.currentTarget.dataset.room)"
+    },
+    {
+      "name": "result",
+      "value": "this.simulateMovement(this.selectedDoor)"
+    },
+    {
+      "name": "entry",
+      "value": "this.doorToRoom[entryDoor]"
+    },
+    {
+      "name": "currentRoom",
+      "value": "entry.room"
+    },
+    {
+      "name": "currentDirection",
+      "value": "entry.direction"
+    },
+    {
+      "name": "rotations",
+      "value": "0"
+    },
+    {
+      "name": "path",
+      "value": "[]"
+    },
+    {
+      "name": "steps",
+      "value": "0"
+    },
+    {
+      "name": "maxSteps",
+      "value": "20"
+    },
+    {
+      "name": "mirror",
+      "value": "this.currentMirrors[currentRoom]"
+    },
+    {
+      "name": "nextRoom",
+      "value": "this.roomConnections[currentRoom][nextDirection]"
+    },
+    {
+      "name": "exitDoor",
+      "value": "this.findExitDoor(currentRoom, nextDirection)"
+    },
+    {
+      "name": "mirrorSpan",
+      "value": "cell.querySelector('.guess-mirror')"
+    },
+    {
+      "name": "mirror",
+      "value": "this.playerGuess[index]"
+    },
+    {
+      "name": "correct",
+      "value": "true"
+    },
+    {
+      "name": "i",
+      "value": "0"
+    },
+    {
+      "name": "mirrorDisplay",
+      "value": "room.querySelector('.mirror-display')"
+    },
+    {
+      "name": "mirror",
+      "value": "this.initialMirrors[index]"
+    },
+    {
+      "name": "date",
+      "value": "new Date(timestamp)"
+    },
+    {
+      "name": "hours",
+      "value": "date.getHours().toString().padStart(2, '0')"
+    },
+    {
+      "name": "minutes",
+      "value": "date.getMinutes().toString().padStart(2, '0')"
+    },
+    {
+      "name": "seconds",
+      "value": "date.getSeconds().toString().padStart(2, '0')"
+    },
+    {
+      "name": "game",
+      "value": "new MirrorMaze()"
+    }
+  ]
+}
