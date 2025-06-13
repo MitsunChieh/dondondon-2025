@@ -992,14 +992,14 @@
                         return `
                             <div class="history-item wrong">
                                 <span class="timestamp">${this.formatTime(item.timestamp)}</span>
-                                <span class="description">${item.description}</span>
+                                <span class="description">第${item.round}回合：${item.description}</span>
                             </div>
                         `;
                     } else if (item.type === 'correct') {
                         return `
                             <div class="history-item correct">
                                 <span class="timestamp">${this.formatTime(item.timestamp)}</span>
-                                <span class="description">${item.description}</span>
+                                <span class="description">第${item.round}回合：${item.description}</span>
                             </div>
                         `;
                     }
@@ -1042,13 +1042,32 @@
                     }
                 }
                 
+                // 增加回合數
+                this.roundCount++;
+                
                 if (correct) {
                     this.showMessage('恭喜你！成功推理出所有鏡子的初始配置！', 'success');
                     // 顯示正確配置
                     this.revealMirrors();
+                    // 加入正確猜測的歷史記錄
+                    this.roundHistory.push({
+                        type: 'correct',
+                        timestamp: new Date(),
+                        round: this.roundCount,
+                        description: '猜測正確！成功解開鏡子配置'
+                    });
                 } else {
                     this.showMessage('猜測錯誤，請繼續探索並推理', 'error');
+                    // 加入錯誤猜測的歷史記錄
+                    this.roundHistory.push({
+                        type: 'wrong',
+                        timestamp: new Date(),
+                        round: this.roundCount,
+                        description: '猜測錯誤，請繼續嘗試'
+                    });
                 }
+                
+                this.updateHistoryDisplay();
             }
             
             revealMirrors() {
