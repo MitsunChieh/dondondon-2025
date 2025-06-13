@@ -734,6 +734,12 @@
                     this.updateDevModeDisplay();
                 }
                 this.showMessage('遊戲開始！點擊外門進行探索', 'info');
+
+                // 清空主面板上的謎底鏡子
+                const mirrorDisplays = document.querySelectorAll('.mirror-display');
+                mirrorDisplays.forEach(display => {
+                    display.innerHTML = '';
+                });
             }
             
             setupEventListeners() {
