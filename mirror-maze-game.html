@@ -28,6 +28,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 1200px;
             width: 100%;
+            margin-bottom: 80px; /* 為固定的 message 區域預留空間 */
         }
 
         h1 {
@@ -305,12 +306,18 @@
         }
 
         .message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            max-width: 80%;
             text-align: center;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .success-message {
